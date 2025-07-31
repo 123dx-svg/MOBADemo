@@ -65,10 +65,10 @@ void AMobaPlayerCharacter::HandleMoveInput(const FInputActionValue& InputActionV
 	FVector2D InputVal = InputActionValue.Get<FVector2D>();
 	InputVal.Normalize();
 
-	AddMovementInput(GetMoveFwdDir()*InputVal.Y+GetLookRig0htDir()*InputVal.X);
+	AddMovementInput(GetMoveFwdDir()*InputVal.Y+GetLookRightDir()*InputVal.X);
 }
 
-FVector AMobaPlayerCharacter::GetLookRig0htDir() const
+FVector AMobaPlayerCharacter::GetLookRightDir() const
 {
 	return CameraComponent->GetRightVector();
 }
@@ -80,5 +80,5 @@ FVector AMobaPlayerCharacter::GetLookFwdDir() const
 
 FVector AMobaPlayerCharacter::GetMoveFwdDir() const
 {
-	return FVector::CrossProduct(GetLookRig0htDir(),FVector::UpVector);
+	return FVector::CrossProduct(GetLookRightDir(),FVector::UpVector);
 }

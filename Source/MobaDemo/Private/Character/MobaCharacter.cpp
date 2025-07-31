@@ -3,6 +3,9 @@
 
 #include "Character/MobaCharacter.h"
 
+#include "GAS/MobaAbilitySystemComponent.h"
+#include "GAS/MobaAttributeSet.h"
+
 // Sets default values
 AMobaCharacter::AMobaCharacter()
 {
@@ -10,6 +13,8 @@ AMobaCharacter::AMobaCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
+	MobaAbilitySystemComponent = CreateDefaultSubobject<UMobaAbilitySystemComponent>(TEXT("MobaAbilitySystemComponent"));
+	MobaAttributeSet = CreateDefaultSubobject<UMobaAttributeSet>(TEXT("MobaAttributeSet"));
 }
 
 // Called when the game starts or when spawned
@@ -17,6 +22,17 @@ void AMobaCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void AMobaCharacter::ServerSideInitialize()
+{
+	MobaAbilitySystemComponent->InitAbilityActorInfo(this, this);
+	MobaAbilitySystemComponent->ApplyInitialEffects();
+}
+
+void AMobaCharacter::ClientSideInitialize()
+{
+	MobaAbilitySystemComponent->InitAbilityActorInfo(this, this);
 }
 
 // Called every frame
@@ -31,5 +47,10 @@ void AMobaCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+UAbilitySystemComponent* AMobaCharacter::GetAbilitySystemComponent() const
+{
+	return MobaAbilitySystemComponent;
 }
 
