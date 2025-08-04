@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "MobaPlayerController.generated.h"
 
+class UGameplayWidget;
 /**
  * 
  */
@@ -21,6 +22,15 @@ public:
 	//客户端 这种也会在LS服务端调用
 	virtual void AcknowledgePossession(class APawn* P) override;
 private:
+	void SpawnGameplayWidget();
+
+	
 	UPROPERTY()
 	class AMobaPlayerCharacter* MobaPlayerCharacter;
+
+	UPROPERTY(EditDefaultsOnly,Category="UI")
+	TSubclassOf<UGameplayWidget> GameplayWidgetClass;
+
+	UPROPERTY()
+	TObjectPtr<UGameplayWidget> GameplayWidget;
 };

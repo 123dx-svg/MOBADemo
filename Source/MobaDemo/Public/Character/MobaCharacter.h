@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/Character.h"
 #include "MobaCharacter.generated.h"
 
@@ -22,6 +23,11 @@ public:
 	
 	void ServerSideInitialize();
 	void ClientSideInitialize();
+	bool IsLocallyControlledByPlayer() const;
+	//只在服务端调用
+	virtual void PossessedBy(AController* NewController) override;
+
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -52,4 +58,25 @@ private:
 	
 	//************************************GameAbilityEnd**********************************************//
 
+
+	//UI组件
+	UPROPERTY(VisibleDefaultsOnly,Category="Gameplay UI")
+	TObjectPtr<UWidgetComponent> OverHeadWidgetComponent;
+	void ConfigureOverHeadStatusWidget();
+
+	//头显组件
+	UPROPERTY(VisibleDefaultsOnly,Category="Gameplay UI")
+	TObjectPtr<UWidgetComponent> HeadStatGaugeWidgetComponent;
+	void ConfigureHeadStatGaugeWidget();
+
+	//不可见范围
+	UPROPERTY(EditDefaultsOnly,Category="Gameplay UI")
+	float HeadStatGaugeVisibilityDelayGap =1.f;
+
+	UPROPERTY(EditDefaultsOnly,Category="Gameplay UI")
+	float HeadStatGaugeVisibilityRangeSquared = 10000000.f;
+	
+	FTimerHandle HeadStatGaugeVisibilityHandle;
+
+	void UpdateHeadGaugeVisibility();
 };
