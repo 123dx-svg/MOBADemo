@@ -17,8 +17,16 @@ class MOBADEMO_API UMobaAbilitySystemComponent : public UAbilitySystemComponent
 public:
 	void ApplyInitialEffects();
 
+	void GiveInitialAbilities();
+
 	
 private:
     UPROPERTY(EditDefaultsOnly,Category="Gameplay Effects")
 	TArray<TSubclassOf<UGameplayEffect>> InitialEffects;
+
+	UPROPERTY(EditDefaultsOnly,Category="Gameplay Effects")
+	TArray<TSubclassOf<UGameplayAbility>> Abilities;
+
+	UPROPERTY(EditDefaultsOnly,Category="Gameplay Effects")
+	TArray<TSubclassOf<UGameplayAbility>> BasicAbilities;
 };

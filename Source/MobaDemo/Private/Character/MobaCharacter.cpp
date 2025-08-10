@@ -35,7 +35,9 @@ void AMobaCharacter::BeginPlay()
 void AMobaCharacter::ServerSideInitialize()
 {
 	MobaAbilitySystemComponent->InitAbilityActorInfo(this, this);
+	//都会自动复制给客户端
 	MobaAbilitySystemComponent->ApplyInitialEffects();
+	MobaAbilitySystemComponent->GiveInitialAbilities();
 }
 
 void AMobaCharacter::ClientSideInitialize()

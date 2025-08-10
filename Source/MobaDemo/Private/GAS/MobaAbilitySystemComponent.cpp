@@ -15,3 +15,19 @@ void UMobaAbilitySystemComponent::ApplyInitialEffects()
 		ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
 	}
 }
+
+void UMobaAbilitySystemComponent::GiveInitialAbilities()
+{
+	//像初始技能这么重要的值当然要在服务器端初始化
+	if (!GetOwner() || !GetOwner()->HasAuthority())
+		return;
+	for (const auto& AbilityClass : Abilities)
+	{
+		GiveAbility(FGameplayAbilitySpec(AbilityClass,0,-1,nullptr));
+	}
+
+	for (const auto& AbilityClass : BasicAbilities)
+	{
+		GiveAbility(FGameplayAbilitySpec(AbilityClass,1,-1,nullptr));
+	}
+}

@@ -73,6 +73,7 @@ private:
 	UPROPERTY(EditDefaultsOnly,Category="Gameplay UI")
 	float HeadStatGaugeVisibilityDelayGap =1.f;
 
+	
 	UPROPERTY(EditDefaultsOnly,Category="Gameplay UI")
 	float HeadStatGaugeVisibilityRangeSquared = 10000000.f;
 	
