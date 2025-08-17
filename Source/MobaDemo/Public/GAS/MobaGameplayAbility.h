@@ -14,5 +14,7 @@ class MOBADEMO_API UMobaGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
 
+protected:
+	UAnimInstance* GetOwnerAnimInstance() const;
 
 };

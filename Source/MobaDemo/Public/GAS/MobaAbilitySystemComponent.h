@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+#include "GAS/MobaGameAbilityTypes.h"
 #include "MobaAbilitySystemComponent.generated.h"
 
 /**
@@ -25,8 +26,8 @@ private:
 	TArray<TSubclassOf<UGameplayEffect>> InitialEffects;
 
 	UPROPERTY(EditDefaultsOnly,Category="Gameplay Effects")
-	TArray<TSubclassOf<UGameplayAbility>> Abilities;
+	TMap<EMobaAbilityInputID,TSubclassOf<UGameplayAbility>> Abilities;
 
 	UPROPERTY(EditDefaultsOnly,Category="Gameplay Effects")
-	TArray<TSubclassOf<UGameplayAbility>> BasicAbilities;
+	TMap<EMobaAbilityInputID,TSubclassOf<UGameplayAbility>> BasicAbilities;
 };

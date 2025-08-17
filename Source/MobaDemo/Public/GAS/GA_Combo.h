@@ -17,11 +17,28 @@ class MOBADEMO_API UGA_Combo : public UMobaGameplayAbility
 public:
 
 	UGA_Combo();
-	
+
+
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
+
+	static FGameplayTag GetComboChangeEventTag();
+	static FGameplayTag GetComboChangeEventEndTag();
+
 private:
+	UFUNCTION()
+	void HandleInputPress(float TimeWaited);
+	void TryCommitCombo();
+
+	
+	void SetupWaitComboInputPress();
+		
 	UPROPERTY(EditDefaultsOnly,Category="Animation")
 	TObjectPtr<UAnimMontage> ComboMontage;
 
+	UFUNCTION()
+	void ComboChangedEventReceived(FGameplayEventData Data);
+
+	
+	FName NextComboName;
 };
  

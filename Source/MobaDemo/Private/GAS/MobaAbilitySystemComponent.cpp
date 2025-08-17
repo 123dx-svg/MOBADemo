@@ -23,11 +23,11 @@ void UMobaAbilitySystemComponent::GiveInitialAbilities()
 		return;
 	for (const auto& AbilityClass : Abilities)
 	{
-		GiveAbility(FGameplayAbilitySpec(AbilityClass,0,-1,nullptr));
+		GiveAbility(FGameplayAbilitySpec(AbilityClass.Value,0,static_cast<int32>(AbilityClass.Key),nullptr));
 	}
 
 	for (const auto& AbilityClass : BasicAbilities)
 	{
-		GiveAbility(FGameplayAbilitySpec(AbilityClass,1,-1,nullptr));
+		GiveAbility(FGameplayAbilitySpec(AbilityClass.Value,1,static_cast<int32>(AbilityClass.Key),nullptr));
 	}
 }

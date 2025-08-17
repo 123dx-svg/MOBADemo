@@ -3,6 +3,7 @@
 
 #include "Player/MobaPlayerCharacter.h"
 
+#include "AbilitySystemComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Camera/CameraComponent.h"
@@ -48,6 +49,12 @@ void AMobaPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		EnhancedInputComp->BindAction(JumpAction,ETriggerEvent::Triggered,this,&AMobaPlayerCharacter::Jump);
 		EnhancedInputComp->BindAction(LookAction,ETriggerEvent::Triggered,this,&AMobaPlayerCharacter::HandleLookInput);
 		EnhancedInputComp->BindAction(MoveAction,ETriggerEvent::Triggered,this,&AMobaPlayerCharacter::HandleMoveInput);
+
+		for (const auto& InputActions:AbilityInputActions)
+		{
+			//新增参数
+			EnhancedInputComp->BindAction(InputActions.Value,ETriggerEvent::Triggered,this,&AMobaPlayerCharacter::HandleAbilityInput,InputActions.Key);
+		}
 	}
 }
 
@@ -66,6 +73,20 @@ void AMobaPlayerCharacter::HandleMoveInput(const FInputActionValue& InputActionV
 	InputVal.Normalize();
 
 	AddMovementInput(GetMoveFwdDir()*InputVal.Y+GetLookRightDir()*InputVal.X);
+}
+
+void AMobaPlayerCharacter::HandleAbilityInput(const FInputActionValue& InputActionValue,EMobaAbilityInputID InputID)
+{
+	bool bPressed = InputActionValue.Get<bool>();
+	if (bPressed)
+	{
+		//根据ID判断按下
+		GetAbilitySystemComponent()->AbilityLocalInputPressed(static_cast<int32>(InputID));
+	}
+	else
+	{
+		GetAbilitySystemComponent()->AbilityLocalInputReleased(static_cast<int32>(InputID));
+	}
 }
 
 FVector AMobaPlayerCharacter::GetLookRightDir() const
